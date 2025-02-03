@@ -3,120 +3,111 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FirstWPF"
+        xmlns:taskManager="clr-namespace:FirstWPF"
         mc:Ignorable="d"
         Title="Process Task Manager" Height="700" Width="500
         ">
 
+
+    <!--<Window.DataContext>
+        <taskManager:ViewModel/>
+    </Window.DataContext>-->
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
-            <!-- 0 -->
             <RowDefinition Height="350"/>
-            <!-- 1 -->
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="220"/>
         </Grid.RowDefinitions>
 
+        
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" 
-                   Content="Список процессов" 
-                   FontSize="16" 
-                   FontWeight="Bold"
-            />
-            <Button Grid.Row="0" 
-                    HorizontalAlignment="Right" 
-                    Content="Обновить" 
-                    FontSize="16" 
-                    Background="Beige" 
-                    Click="RefreshButton_OnClick"
-            />
+            <Label Grid.Column="0" Content="Список процессов:" FontSize="16" FontWeight="Bold" />
+            <Button Grid.Column="1" Content="Обновить" FontSize="15" Background="Beige" 
+            
+                    <!--Click="RefreshButton_OnClick"-->
+            
+                    />
         </Grid>
-        <ListBox ItemsSource="{Binding CLASS}" 
-                 VerticalAlignment="Top" 
-                 HorizontalContentAlignment="Stretch"
-                 Grid.Row="1"
-                 SelectionChanged="ProcessList_SelectionChanged"
-                 >
 
+
+        <ListBox 
+                 <!--ItemsSource="{Binding Processes}"-->
+                 VerticalAlignment="Top"
+                 HorizontalContentAlignment="Stretch"
+                 SelectionChanged="TasksList_SelectionChanged"
+                 Grid.Row="1">
             <ListBox.Template>
                 <ControlTemplate>
                     <DockPanel LastChildFill="True">
-                        <Grid DockPanel.Dock="Top" 
-                              Height="30">
+                        <Grid DockPanel.Dock="Top" Height="30">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="25"/>
                                 <ColumnDefinition Width="80"/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-
-                            <Label Grid.Column="1">PID</Label>
-                            <Label Grid.Column="1" Margin="40,0,-40,0">PNAME</Label>
+                            <Label Grid.Column="1">ID процесса</Label>
+                            <Label Grid.Column="2">Имя процесса</Label>
                         </Grid>
                         <ScrollViewer>
-                            <ItemsPresenter/>
+                            <ItemsPresenter />
                         </ScrollViewer>
                     </DockPanel>
                 </ControlTemplate>
-
             </ListBox.Template>
-
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="25"/>
                             <ColumnDefinition Width="80"/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-
                         <CheckBox Grid.Column="0" 
-                                  IsChecked="{Binding KeepAlive}" 
-                                  Checked="ToggleButton_OnChecked"
-                                  Unchecked="ToggleButton_OnUnchecked"/>
-
-                        <TextBlock Text="{Binding Id}" />
-                        <TextBlock Text="{Binding ProcessName}" />
+                                  <!--IsChecked="{Binding KeepAlive}" 
+                                  Checked="ToggleButton_OnChecked" 
+                                  Unchecked="ToggleButton_OnUnchecked"-->
+                                  />
+                        <TextBlock 
+                            <!--Text="{Binding Id}"--> 
+                            Grid.Column="1"/>
+                        <TextBlock 
+                            <!--Text="{Binding ProcessName}"--> 
+                            Grid.Column="2"/>
                     </Grid>
                 </DataTemplate>
-
             </ListBox.ItemTemplate>
         </ListBox>
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="72*"/>
-                <ColumnDefinition Width="53*"/>
-                <ColumnDefinition Width="125"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <ComboBox Name="Приоритеты" 
-                      VerticalContentAlignment="Center"/>
-            <Button Grid.Column="1" 
-                    Content="Сменить приоритет"
-                    FontSize="15"
-                    Background="AliceBlue"
-                    Click="ChangePriority_OnClick"/>
-            <Button Grid.Column="2" 
-                    Content="Убить"
-                    FontSize="15"
-                    Background="Red"
-                    Click="KillProcess_OnClick" 
-                    Margin="5,0,0,0"/>
+            <ComboBox Name="Priorities" VerticalContentAlignment="Center"/>
+            <Button Grid.Column="1" Content="Сменить приоритет" FontSize="15" Background="AliceBlue" 
+                    <!--Click="ChangePriority_OnClick"-->
+                    />
+            <Button Grid.Column="3" Content="Убить" FontSize="15" Background="Red" 
+                    <!--Click="KillProcess_OnClick"-->
+                    />
         </Grid>
 
-        <Label Grid.Row="3" 
-               Content="Информация о выбраном процессе"
-               FontSize="16"
-               FontWeight="Bold"/>
+        <Label Grid.Row="3" Content="Информация о выбранном процессе:" FontSize="16" FontWeight="Bold" />
 
         <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="106"/>
+                <ColumnDefinition Width="140"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -129,61 +120,50 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            
-            
-            
-            <Label Grid.Row="0" 
-                   Grid.Column="0" 
-                   Content="Процесс ИД" />
-           
-            <!-- Колонка 2 -->
+            <Label Grid.Row="0" Grid.Column="0" Content="Process id:" />
+            <Label Grid.Row="0" Grid.Column="1" 
+                   <!--Content="{Binding SelectedProcess.Id, Mode=OneWay}"--> 
+                   />
 
-            <Label Grid.Row="1" 
-                   Grid.Column="0" 
-                   Content="Имя процесса" />
+            <Label Grid.Row="1" Grid.Column="0" Content="Process name:" />
+            <Label Grid.Row="1" Grid.Column="1" 
+                   <!--Content="{Binding SelectedProcess.ProcessName, Mode=OneWay}"--> 
+                   />
 
-            <!-- Колонка 2 -->
-            
-            <Label Grid.Row="2" 
-                   Grid.Column="0" 
-                   Content="Имя процесса" />
+            <Label Grid.Row="2" Grid.Column="0" Content="Nonpaged memory size:" />
+            <Label Grid.Row="2" Grid.Column="1" 
+                   <!--Content="{Binding SelectedProcess.NonpagedSystemMemorySize64, Mode=OneWay}"--> 
+                   />
 
-            <!-- Колонка 2 -->
-            
-            <Label Grid.Row="3" 
-                   Grid.Column="0" 
-                   Content="Процесс ИД" />
+            <Label Grid.Row="3" Grid.Column="0" Content="Paged memory size:" />
+            <Label Grid.Row="3" Grid.Column="1" 
+                   <!--Content="{Binding SelectedProcess.PagedMemorySize64, Mode=OneWay}"--> 
+                   />
 
-            <!-- Колонка 2 -->
-            
-            <Label Grid.Row="4" 
-                   Grid.Column="0" 
-                   Content="Процесс ИД" />
+            <Label Grid.Row="4" Grid.Column="0" Content="Private memory size:" />
+            <Label Grid.Row="4" Grid.Column="1" 
+                   <!--Content="{Binding SelectedProcess.PrivateMemorySize64, Mode=OneWay}"--> 
+                   />
 
-            <!-- Колонка 2 -->
+            <Label Grid.Row="5" Grid.Column="0" Content="Virtual memory size:" />
+            <Label Grid.Row="5" Grid.Column="1" 
+                   <!--Content="{Binding SelectedProcess.VirtualMemorySize64, Mode=OneWay}"--> 
+                   />
 
-            <Label Grid.Row="5" 
-                   Grid.Column="0" 
-                   Content="Процесс ИД" />
+            <Label Grid.Row="6" Grid.Column="0" Content="Start time:" />
+            <Label Grid.Row="6" Grid.Column="1" 
+                   <!--Content="{Binding SelectedProcess.StartTime, Mode=OneWay}"--> 
+                   />
 
-            <!-- Колонка 2 -->
+            <Label Grid.Row="7" Grid.Column="0" Content="Threads number:" />
+            <Label Grid.Row="7" Grid.Column="1" 
+                   <!--Content="{Binding SelectedProcess.Threads.Count, Mode=OneWay}"--> 
+                   />
 
-            <Label Grid.Row="6" 
-                   Grid.Column="0" 
-                   Content="Процесс ИД" />
-
-            <!-- Колонка 2 -->
-            
-            <Label Grid.Row="7" 
-                   Grid.Column="0" 
-                   Content="Процесс ИД" />
-
-            <!-- Колонка 2 -->
-            
-            <Label Grid.Row="8" 
-                   Grid.Column="0" 
-                   Content="Процесс ИД" />
-
+            <Label Grid.Row="8" Grid.Column="0" Content="Priority:" />
+            <Label Grid.Row="8" Grid.Column="1" 
+                   <!--Content="{Binding SelectedProcess.PriorityClass, Mode=OneWay}"--> 
+                   />
         </Grid>
     </Grid>
 </Window>
